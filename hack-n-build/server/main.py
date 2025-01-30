@@ -32,5 +32,23 @@ import requests
 from requests.auth import HTTPBasicAuth
 from fastapi import FastAPI, HTTPException
 
+app = FastAPI()
+
+
+#Mr. GPT:!@##!@#!
+openai.api_key = "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"  # Replace with secure method
+
+
+class CompanyRequest(BaseModel):
+    company: str
+
+
+#take data from MR. Yahoo finanance.
+def fetch_stock_data(company_name: str) -> pd.DataFrame:
+    stock = yf.Ticker(company_name)
+    hist = stock.history(period="70d")
+    if hist.empty:
+        raise ValueError(f"No data found for company: {company_name}")
+    return hist
 
 
