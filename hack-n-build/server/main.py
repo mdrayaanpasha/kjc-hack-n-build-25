@@ -76,12 +76,14 @@ def evaluate_model(model: LinearRegression, X_test: pd.DataFrame, Y_test: pd.Ser
     }
 
 
+
+
+
 """
 so this bad boy will take posts data from reddit and then send it to MR. GPT for analysis.
 
 so i gotta be careful with the data that i send to MR. GPT, cause if i send too much data, then it will be like a lot of money
 and if i send too little data, then it will be like not enough data for analysis. so i gotta be careful with that.
-
 
 """
 def analyze_sentiment_with_gpt(posts: List[str], company: str) -> str:
@@ -112,3 +114,67 @@ def analyze_sentiment_with_gpt(posts: List[str], company: str) -> str:
         return f"Analysis failed: {str(e)}"
 
 
+"""
+reddits posts are Pain in my A**
+so lets do it in small stesp. so put this emoji if done? ✅
+
+
+TO DO:
+- connect with credentials : ✅
+- try to sent api req : ✅
+- get the data from the api : ✅
+- return the data to the user: ✅
+- err handling imp B!@#!@# : ✅
+"""
+def fetch_reddit_posts(company: str) -> List[str]:
+    client_id = 'HKtr7KTxz6_NUCrEuI17lw'
+    client_secret = 'TRgnhTehqnWrTYb8mMaZ7Op8Hy02Nw'
+    redirect_uri = 'https://rayaanpasha.vercel.app'
+    
+    try:
+        auth = HTTPBasicAuth(client_id, client_secret)
+        data = {
+            'grant_type': 'client_credentials',
+            'redirect_uri': redirect_uri
+        }
+        
+        headers = {
+            'User-Agent': 'MyApp/1.0 by Ok-Stock6652'
+        }
+
+        response = requests.post(
+            'https://www.reddit.com/api/v1/access_token',
+            auth=auth,
+            data=data,
+            headers=headers
+        )
+        
+        if response.status_code != 200:
+            return [f"Error: Authentication failed - {response.text}"]
+
+        access_token = response.json()['access_token']
+
+        headers['Authorization'] = f'bearer {access_token}'
+        params = {
+            'q': company,
+            'limit': 10,
+            'sort': 'relevance'
+        }
+
+        search_response = requests.get(
+            'https://oauth.reddit.com/r/all/search',
+            headers=headers,
+            params=params
+        )
+
+        if search_response.status_code != 200:
+            return [f"Error: Search failed - {search_response.text}"]
+
+        posts = []
+        for post in search_response.json()['data']['children']:
+            posts.append(post['data']['title'])
+
+        return posts[:5]  
+
+    except Exception as e:
+        return [f"Error: {str(e)}"]
