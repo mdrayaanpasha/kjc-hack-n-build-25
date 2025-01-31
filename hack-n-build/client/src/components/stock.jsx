@@ -47,7 +47,7 @@ export default function Stock() {
 
       try {
 
-        const { data } = await axios.get(`http://localhost:3000/stock/${ticker}`);
+        const { data } = await axios.get(`https://kjc-hack-n-build-25.vercel.app/stock/${ticker}`);
 
         await new Promise(resolve => setTimeout(resolve, 1000));
         setStockData(data);

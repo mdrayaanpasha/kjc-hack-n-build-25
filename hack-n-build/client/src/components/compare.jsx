@@ -27,7 +27,7 @@ const StockComparison = () => {
   useEffect(() => {
     if (brand1 && brand2) {
       setLoading(true);
-      axios.get(`http://localhost:3000/compare-stocks?symbol1=${brand1}&symbol2=${brand2}`)
+      axios.get(`https://kjc-hack-n-build-25.vercel.app/compare-stocks?symbol1=${brand1}&symbol2=${brand2}`)
       .then((response) => {
           setStockData(response.data);
           setLoading(false);

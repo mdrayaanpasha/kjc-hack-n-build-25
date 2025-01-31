@@ -1,0 +1,33 @@
+{
+    "routes": [
+      {
+        "src": "/",
+        "dest": "/"
+      },
+      {
+        "src": "/stock",
+        "dest": "/"
+      },
+      {
+         "src": "/stock-compare",
+        "dest": "/"
+      },
+        {
+            "src": "/ticker-select",
+            "dest": "/"
+        },
+        {
+            "src": "/compare-form",
+            "dest": "/"
+        },
+        {
+            "src": "/try-now",
+            "dest": "/"
+        }
+        
+
+
+
+    ]
+  }
+  

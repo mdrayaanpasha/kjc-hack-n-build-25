@@ -27,7 +27,7 @@ export default function StockDashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:3000/stocks/summary')
+    fetch('https://kjc-hack-n-build-25.vercel.app/stocks/summary')
 
       .then(response => response.json())
       .then(data => {
